@@ -1,8 +1,16 @@
 package components
 
 templ Page(heading string, child templ.Component) {
-    @Header(heading)
-    <main class="main">
-        @child
-    </main>
+	<html>
+		<head>
+			<title>{ heading }</title>
+			<link rel="stylesheet" href="/static/styles.css"/>
+		</head>
+		<body>
+			@Header(heading)
+			<main class="main">
+				@child
+			</main>
+		</body>
+	</html>
 }

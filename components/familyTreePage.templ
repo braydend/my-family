@@ -1,0 +1,28 @@
+package components
+
+import (
+	"github.com/braydend/my-family/models"
+	"strconv"
+)
+
+templ FamilyTreePage(familyTree models.FamilyTree) {
+	<section>
+		if familyTree.CountFamilyMembers() == 0 {
+			<span>Family is empty. Add a family member to start</span>
+			<form>
+				<label for="name">Name</label>
+				<input type="text" name="name" placeholder="Name"/>
+				<button type="submit">Add Family Member</button>
+			</form>
+		} else {
+			<span>This family tree has { strconv.FormatUint(uint64(familyTree.CountFamilyMembers()), 10) } members</span>
+			<ul>
+				for _, member := range familyTree.Members {
+					<li>
+						@Member(member)
+					</li>
+				}
+			</ul>
+		}
+	</section>
+}

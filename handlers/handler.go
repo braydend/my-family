@@ -9,9 +9,9 @@ import (
 )
 
 func RootHandler() http.Handler {
-	stubFamilyTree := models.FamilyTree{[]models.FamilyMember{{"John"}, {"Jack"}, {"Jane"}}}
+	stubFamilyTree := models.FamilyTree{ /*[]models.FamilyMember{{"John"}, {"Jack"}, {"Jane"}}*/ }
 
-	component := components.Page("Family Tree", components.FamilyTree(stubFamilyTree))
+	component := components.Page("Family Tree", components.FamilyTreePage(stubFamilyTree))
 
 	return templ.Handler(component)
 }

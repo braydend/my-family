@@ -1,9 +1,5 @@
 package models
 
-type FamilyMember struct {
-	Name string
-}
-
 type FamilyTree struct {
 	Members []FamilyMember
 }
