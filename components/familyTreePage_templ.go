@@ -36,7 +36,7 @@ func FamilyTreePage(familyTree models.FamilyTree) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if familyTree.CountFamilyMembers() == 0 {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span>Family is empty. Add a family member to start</span><form><label for=\"name\">Name</label> <input type=\"text\" name=\"name\" placeholder=\"Name\"> <button type=\"submit\">Add Family Member</button></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"start-tree\"><span>Family is empty. Add a family member to start</span><form hx-post=\"/\" hx-target=\"#start-tree\" hx-swap=\"outerHTML\"><label for=\"child\">Name</label> <input type=\"text\" name=\"child\" placeholder=\"Name\"> <button type=\"submit\">Add Family Member</button></form></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -48,7 +48,7 @@ func FamilyTreePage(familyTree models.FamilyTree) templ.Component {
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.FormatUint(uint64(familyTree.CountFamilyMembers()), 10))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/familyTreePage.templ`, Line: 18, Col: 95}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/familyTreePage.templ`, Line: 20, Col: 95}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -63,7 +63,7 @@ func FamilyTreePage(familyTree models.FamilyTree) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = Member(member).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = Member(*member).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

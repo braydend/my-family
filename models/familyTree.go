@@ -1,7 +1,7 @@
 package models
 
 type FamilyTree struct {
-	Members []FamilyMember
+	Members []*FamilyMember
 }
 
 func (f *FamilyTree) CountFamilyMembers() uint {
