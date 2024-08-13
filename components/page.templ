@@ -1,0 +1,8 @@
+package components
+
+templ Page(heading string, child templ.Component) {
+    @Header(heading)
+    <main class="main">
+        @child
+    </main>
+}

@@ -1,0 +1,15 @@
+package components
+
+import "strconv"
+import "github.com/braydend/my-family/models"
+
+templ FamilyTree(familyTree models.FamilyTree) {
+    <section>
+        <span>Family consists of {strconv.FormatUint(uint64(familyTree.CountFamilyMembers()), 10)} members</span>
+        <ul>
+            for _, member := range familyTree.Members {
+                <li>{ member.Name }</li>
+            }
+        </ul>
+    </section>
+}
