@@ -1,5 +1,7 @@
 # My Family
 
+[![Go Test](https://github.com/braydend/my-family/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/braydend/my-family/actions/workflows/test.yml)
+
 App for builing family trees
 
 ## Getting started
