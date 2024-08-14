@@ -13,18 +13,18 @@ type FamilyTreeHandler struct {
 	http.Handler
 	familyTree        models.FamilyTree
 	familyTreeService *services.FamilyTreeService
+	logger            *services.LoggerService
 }
 
 func NewFamilyTreeHandler() *FamilyTreeHandler {
 	return &FamilyTreeHandler{
 		familyTree:        models.FamilyTree{},
 		familyTreeService: &services.FamilyTreeService{},
+		logger:            services.NewLogger(),
 	}
 }
 
 func (h *FamilyTreeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("DEBUG: %s %s\n", r.Method, r.URL.Path)
-
 	if r.Method == http.MethodPost {
 		h.Post(w, r)
 		return
@@ -47,15 +47,12 @@ func (h *FamilyTreeHandler) Post(w http.ResponseWriter, r *http.Request) {
 	childName := r.FormValue("child")
 	parentName := r.FormValue("parent")
 
-	fmt.Printf("DEBUG: Adding child '%s' to parent '%s'\n", childName, parentName)
+	h.logger.Debug("Adding child '%s' to parent '%s'\n", childName, parentName)
 
 	newChild := models.NewFamilyMember(childName)
 	if len(parentName) > 0 {
 
 		parent, err := h.familyTreeService.FindFamilyMember(string(parentName), &h.familyTree)
-
-		fmt.Printf("DEBUG: Found parent: %s\n", parent.Name)
-		fmt.Printf("DEBUG: Parent has %d children\n", len(parent.Children))
 
 		if err != nil {
 			fmt.Fprintf(w, "Error: %s", err)
@@ -63,8 +60,6 @@ func (h *FamilyTreeHandler) Post(w http.ResponseWriter, r *http.Request) {
 		}
 
 		parent.AddChild(newChild)
-
-		fmt.Printf("DEBUG: Parent now has %d children\n", len(parent.Children))
 	}
 
 	h.familyTree.Members = append(h.familyTree.Members, newChild)
