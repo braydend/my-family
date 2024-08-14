@@ -49,7 +49,7 @@ func (h *FamilyTreeHandler) Post(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("DEBUG: Adding child '%s' to parent '%s'\n", childName, parentName)
 
-	newChild := models.FamilyMember{string(childName), []models.FamilyMember{}, []models.FamilyMember{}}
+	newChild := models.NewFamilyMember(childName)
 	if len(parentName) > 0 {
 
 		parent, err := h.familyTreeService.FindFamilyMember(string(parentName), &h.familyTree)
@@ -67,7 +67,7 @@ func (h *FamilyTreeHandler) Post(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("DEBUG: Parent now has %d children\n", len(parent.Children))
 	}
 
-	h.familyTree.Members = append(h.familyTree.Members, &newChild)
+	h.familyTree.Members = append(h.familyTree.Members, newChild)
 
-	components.Member(newChild).Render(r.Context(), w)
+	components.Member(*newChild).Render(r.Context(), w)
 }
